@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".DeveloperInfoActivity">
+
+    <LinearLayout
+        android:layout_centerInParent="true"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Developed By"
+            android:textColor="@android:color/white"
+            android:textSize="36sp"
+            android:fontFamily="@font/lobster_regular"
+            android:textStyle="bold"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Sinthi Tasnim"
+            android:textSize="24sp"
+            android:fontFamily="@font/lobster_regular"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="18sp"
+            android:layout_marginBottom="18sp"
+            />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Natasha Tanzila"
+            android:textSize="24sp"
+            android:fontFamily="@font/lobster_regular"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="18sp"
+            android:layout_marginBottom="18sp"
+            />
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nayeema Ferdous"
+            android:textSize="24sp"
+            android:layout_gravity="center"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="18sp"
+            android:layout_marginBottom="18sp"
+            android:fontFamily="@font/lobster_regular"
+            />
+
+    </LinearLayout>
+
+</RelativeLayout>
