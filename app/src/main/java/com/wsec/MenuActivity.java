@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.location.LocationManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.telephony.SmsManager;
@@ -57,7 +58,13 @@ public class MenuActivity extends AppCompatActivity {
     LocationManager locationManager;
 
     ProgressDialog dialog;
+    @BindView(R.id.container_siren_bot)
+    CardView containerSirenBot;
+    @BindView(R.id.container_messenger_bot)
+    CardView containerMessengerBot;
     private FusedLocationProviderClient fusedLocationClient;
+
+    String FACEBOOK_BOT_LINK = "http://m.me/108653704101610";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,7 +112,9 @@ public class MenuActivity extends AppCompatActivity {
                     getLastKnownLoc();
                 }
             }
-            @Override public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(List<PermissionRequest> permissions, PermissionToken token) {
 
                 token.continuePermissionRequest();
 
@@ -115,6 +124,34 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
+    @OnClick(R.id.container_messenger_bot)
+    public void onMessengerBotClicked() {
+        try {
+            Uri uri = Uri.parse(FACEBOOK_BOT_LINK);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setPackage("com.facebook.orca");
+            i.setData(uri);
+            startActivity(i);
+        } catch (Exception e) {
+            Uri uri = Uri.parse(FACEBOOK_BOT_LINK);
+            Intent i = new Intent(Intent.ACTION_VIEW);
+            i.setData(uri);
+            startActivity(i);
+        }
+    }
+
+    @OnClick(R.id.container_siren_bot)
+    public void onSirenBotClicked() {
+        startActivity(new Intent(this, SpeechRecognitionActivity.class));
+    }
+
+    @OnClick(R.id.container_dev_info)
+    public void onDevInfoClicked() {
+        startActivity(new Intent(this,DeveloperInfoActivity.class));
+    }
+
+
+
     private void getLastKnownLoc() {
         fusedLocationClient.getLastLocation()
                 .addOnCompleteListener(task -> new Handler().postDelayed(new Runnable() {
@@ -123,12 +160,12 @@ public class MenuActivity extends AppCompatActivity {
                         dialog.dismiss();
                         shareLocation(task);
                     }
-                },1500))
+                }, 1500))
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
 
-                        Toast.makeText(MenuActivity.this,"Couldn't Retrieve Location !",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MenuActivity.this, "Couldn't Retrieve Location !", Toast.LENGTH_SHORT).show();
 
                     }
                 })
@@ -143,7 +180,7 @@ public class MenuActivity extends AppCompatActivity {
             if (action == KeyEvent.ACTION_DOWN) {
 
                 if (event.getRepeatCount() == 21) {
-                   sendEmergencySMSToTrustedContacts();
+                    sendEmergencySMSToTrustedContacts();
                 }
 
                 return true;
@@ -154,8 +191,9 @@ public class MenuActivity extends AppCompatActivity {
 
     private void sendEmergencySMSToTrustedContacts() {
         Gson gson = new Gson();
-        Type listType = new TypeToken<ArrayList<TrustedContact>>(){}.getType();
-        List<TrustedContact> trustedContactList = gson.fromJson(SharedPrefUtil.getInstance().getTrustedContactsJSON(this),listType) == null?new ArrayList<>():  gson.fromJson(SharedPrefUtil.getInstance().getTrustedContactsJSON(this),listType);
+        Type listType = new TypeToken<ArrayList<TrustedContact>>() {
+        }.getType();
+        List<TrustedContact> trustedContactList = gson.fromJson(SharedPrefUtil.getInstance().getTrustedContactsJSON(this), listType) == null ? new ArrayList<>() : gson.fromJson(SharedPrefUtil.getInstance().getTrustedContactsJSON(this), listType);
 
 
         fusedLocationClient.getLastLocation().addOnCompleteListener(new OnCompleteListener<Location>() {
@@ -165,12 +203,10 @@ public class MenuActivity extends AppCompatActivity {
                 double lat = task.getResult().getLatitude();
                 double lon = task.getResult().getLongitude();
 
-                if(trustedContactList.size()>0)
-                {
-                    for(TrustedContact trustedContact : trustedContactList)
-                    {
-                        String message = String.format("Help Me Please. My Current Location : https://maps.google.com/?q=%s,%s",lat,lon);
-                        sendEmergencySMS(trustedContact.getContactNo(),message);
+                if (trustedContactList.size() > 0) {
+                    for (TrustedContact trustedContact : trustedContactList) {
+                        String message = String.format("Help Me Please. My Current Location : https://maps.google.com/?q=%s,%s", lat, lon);
+                        sendEmergencySMS(trustedContact.getContactNo(), message);
                     }
                 }
 
@@ -180,7 +216,7 @@ public class MenuActivity extends AppCompatActivity {
 
     }
 
-    private void sendEmergencySMS(String phoneNumber,String message) {
+    private void sendEmergencySMS(String phoneNumber, String message) {
         ArrayList<PendingIntent> sentPendingIntents = new ArrayList<PendingIntent>();
         ArrayList<PendingIntent> deliveredPendingIntents = new ArrayList<PendingIntent>();
         PendingIntent sentPI = PendingIntent.getBroadcast(this, 0,
@@ -200,32 +236,30 @@ public class MenuActivity extends AppCompatActivity {
         } catch (Exception e) {
 
             e.printStackTrace();
-            Toast.makeText(getBaseContext(), "SMS sending failed...",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), "SMS sending failed...", Toast.LENGTH_SHORT).show();
         }
 
     }
 
     private void shareLocation(Task<Location> task) {
-        double lat = task.getResult().getLatitude();
-        double lon = task.getResult().getLongitude();
+        if (task.getResult() != null) {
+            double lat = task.getResult().getLatitude();
+            double lon = task.getResult().getLongitude();
 
 
-        double accuracy = task.getResult().getAccuracy();
+            double accuracy = task.getResult().getAccuracy();
 
-        Intent txtIntent = new Intent(android.content.Intent.ACTION_SEND);
-        txtIntent .setType("text/plain");
-        txtIntent .putExtra(android.content.Intent.EXTRA_SUBJECT, "My Location");
-        txtIntent .putExtra(android.content.Intent.EXTRA_TEXT, String.format("https://maps.google.com/?q=%s,%s",lat,lon));
-        startActivity(Intent.createChooser(txtIntent ,"Share Location"));
-
-    }
-
-    @OnClick(R.id.container_dev_info)
-    public void onContainerDevInfoClicked() {
-
-        startActivity(new Intent(this,DeveloperInfoActivity.class));
+            Intent txtIntent = new Intent(Intent.ACTION_SEND);
+            txtIntent.setType("text/plain");
+            txtIntent.putExtra(Intent.EXTRA_SUBJECT, "My Location");
+            txtIntent.putExtra(Intent.EXTRA_TEXT, String.format("https://maps.google.com/?q=%s,%s", lat, lon));
+            startActivity(Intent.createChooser(txtIntent, "Share Location"));
+        } else {
+            Toast.makeText(this, "Couldn't Retrieve Location", Toast.LENGTH_SHORT).show();
+        }
 
     }
+
 
     public class SmsDeliveredReceiver extends BroadcastReceiver {
         @Override

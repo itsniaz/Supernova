@@ -39,7 +39,7 @@
                         android:layout_height="56dp"
                         android:padding="2dp"
                         android:layout_margin="36dp"
-                        android:src="@drawable/ic_security"
+                        app:srcCompat="@drawable/ic_security"
                         android:layout_centerInParent="true"
                         />
 
@@ -77,7 +77,7 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_margin="36dp"
-                        android:src="@drawable/ic_doctor"
+                        app:srcCompat="@drawable/ic_doctor"
                         android:layout_centerInParent="true"
                         />
 
@@ -121,7 +121,7 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_margin="36dp"
-                        android:src="@drawable/ic_alarm"
+                        app:srcCompat="@drawable/ic_alarm"
                         android:layout_centerInParent="true"
                         />
 
@@ -159,7 +159,7 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_margin="36dp"
-                        android:src="@drawable/ic_share"
+                        app:srcCompat="@drawable/ic_share"
                         android:layout_centerInParent="true"
                         />
 
@@ -184,14 +184,15 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             >
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/container_dev_info"
-                android:layout_width="160dp"
+                android:id="@+id/container_messenger_bot"
+                android:layout_width="0dp"
+                android:layout_weight="1"
                 android:layout_margin="16dp"
                 android:layout_height="wrap_content"
                 app:cardCornerRadius="8dp"
@@ -206,7 +207,91 @@
                         android:layout_width="56dp"
                         android:layout_height="56dp"
                         android:layout_margin="36dp"
-                        android:src="@drawable/ic_dev"
+                        app:srcCompat="@drawable/ic_lawyer"
+                        android:layout_centerInParent="true"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:text="Lawyer Bot"
+                        android:layout_marginBottom="16dp"
+                        />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
+                android:id="@+id/container_siren_bot"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_margin="16dp"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                >
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16dp"
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="36dp"
+                        app:srcCompat="@drawable/ic_robot"
+                        android:layout_centerInParent="true"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:text="Siren Bot"
+                        android:layout_marginBottom="16dp"
+                        />
+
+                </RelativeLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/container_dev_info"
+                android:layout_width="150dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                >
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="16dp"
+
+                    >
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="56dp"
+                        android:layout_height="56dp"
+                        android:layout_margin="36dp"
+                        app:srcCompat="@drawable/ic_dev"
                         android:layout_centerInParent="true"
                         />
 
@@ -223,8 +308,8 @@
 
                 </RelativeLayout>
 
-            </androidx.cardview.widget.CardView>
 
+            </androidx.cardview.widget.CardView>
 
 
         </LinearLayout>

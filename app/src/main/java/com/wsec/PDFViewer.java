@@ -14,7 +14,6 @@ public class PDFViewer extends AppCompatActivity {
         pdfView = findViewById(R.id.pdfViewer);
 
         String fileName = getIntent().getStringExtra("fileName");
-
         pdfView.fromAsset(fileName)
                 .load();
 
